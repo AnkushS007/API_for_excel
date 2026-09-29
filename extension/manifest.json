@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "AM4 Rapid Growth Assistant",
+  "version": "2.0.0",
+  "description": "Read-only AM4 data capture and rapid-growth analysis.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.airlinemanager.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AM4 Rapid Growth Assistant"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.airlinemanager.com/*"
+      ],
+      "js": [
+        "page_bridge.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.airlinemanager.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    }
+  ]
+}
