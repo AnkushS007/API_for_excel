@@ -24,15 +24,15 @@
   <main>
     <header class="topbar">
       <div><span class="eyebrow">AIRLINE MANAGER 4</span><h1 id="title">Dashboard</h1></div>
-      <div class="actions"><span id="sync" class="pill muted">No airline connected</span><label class="button secondary">Import snapshot<input id="snapshot" type="file" accept=".json" hidden></label></div>
+      <div class="actions"><span id="sync" class="pill muted">Not connected</span><button id="connect" class="button primary">Connect AM4</button><button id="refresh" class="button secondary">Refresh</button><button id="logout" class="button secondary">Disconnect</button></div>
     </header>
 
     <section id="dashboard" class="view active">
       <div id="empty" class="empty card">
         <div class="empty-icon">✈</div>
         <h2>Connect your airline</h2>
-        <p>Import the diagnostic snapshot produced by the AM4 browser extension. After that, this dashboard uses the captured state instead of asking you to enter cash, aircraft or route data manually.</p>
-        <label class="button primary">Import AM4 snapshot<input id="snapshot2" type="file" accept=".json" hidden></label>
+        <p>Connect to your AM4 account through the local read-only connector. Your credentials are entered only on this computer and are not stored by the dashboard.</p>
+        <button id="connect2" class="button primary">Connect AM4</button>
       </div>
       <div id="dashboard-content" class="hidden">
         <div class="hero card">
