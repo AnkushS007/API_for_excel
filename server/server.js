@@ -12,18 +12,34 @@ let browser = null;
 let context = null;
 let page = null;
 let credentials = null;
+let capturedRecords = [];
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
+function classify(url){ const u=url.toLowerCase(); for(const [k,terms] of Object.entries({fleet:['fleet','aircraft'],routes:['route'],hubs:['hub','airport'],finance:['finance','cash','balance'],fuel:['fuel'],maintenance:['maintenance'],company:['company'],research:['research'],staff:['staff'],marketing:['marketing'],stock:['stock']})) if(terms.some(t=>u.includes(t))) return k; return 'other'; }
 
 async function ensureBrowser() {
   if (browser) return;
   browser = await chromium.launch({ headless: true });
   context = await browser.newContext();
   page = await context.newPage();
+  page.on('response', async response => {
+    try {
+      const url = response.url();
+      if (!url.includes('airlinemanager.com')) return;
+      const type = response.request().resourceType();
+      if (!['xhr','fetch','document'].includes(type)) return;
+      const ct = response.headers()['content-type'] || '';
+      if (!ct.includes('json') && type !== 'document') return;
+      const body = await response.text();
+      if (body && body.length < 750000) capturedRecords.push({url, category: classify(url), status: response.status(), body, capturedAt: new Date().toISOString()});
+      if (capturedRecords.length > 500) capturedRecords.shift();
+    } catch {}
+  });
 }
 
 async function login(email, password) {
   await ensureBrowser();
+  capturedRecords = [];
   credentials = null;
   await page.goto("https://www.airlinemanager.com/", { waitUntil: "domcontentloaded", timeout: 60000 });
   await page.waitForTimeout(1500);
@@ -59,7 +75,7 @@ async function collectState() {
     text: document.body?.innerText || "",
     htmlLength: document.documentElement?.outerHTML?.length || 0
   }));
-  return { capturedAt: new Date().toISOString(), ...result };
+  return { capturedAt: new Date().toISOString(), ...result, records: capturedRecords };
 }
 
 app.post("/api/login", async (req, res) => {
@@ -88,6 +104,7 @@ app.post("/api/logout", async (_req, res) => {
     if (browser) await browser.close().catch(() => {});
   } finally {
     browser = context = page = credentials = null;
+    capturedRecords = [];
   }
   res.json({ ok: true });
 });
