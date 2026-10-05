@@ -86,7 +86,7 @@ app.post("/api/login", async (req, res) => {
     res.json({ ok: true, state });
   } catch (error) {
     credentials = null;
-    res.status(401).json({ ok: false, error: error.message });
+    console.error("AM4 login error:", error);\n    res.status(401).json({ ok: false, error: error.message, detail: error.stack });
   }
 });
 
