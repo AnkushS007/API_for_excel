@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AM4 Command Center</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">✈</span><div><strong>AM4 Command</strong><small>Rapid Growth Center</small></div></div>
+    <nav>
+      <button class="nav active" data-view="dashboard">⌂ <span>Dashboard</span></button>
+      <button class="nav" data-view="aircraft">✈ <span>Aircraft</span></button>
+      <button class="nav" data-view="routes">⌁ <span>Routes</span></button>
+      <button class="nav" data-view="circuits">◈ <span>Circuits</span></button>
+      <button class="nav" data-view="prices">◷ <span>Fuel & CO₂</span></button>
+      <button class="nav" data-view="data">▦ <span>Airline Data</span></button>
+    </nav>
+    <div class="side-note"><b>Read-only by design</b><br>Recommendations only. Purchases and route changes stay under your control.</div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><span class="eyebrow">AIRLINE MANAGER 4</span><h1 id="title">Dashboard</h1></div>
+      <div class="actions"><span id="sync" class="pill muted">No airline connected</span><label class="button secondary">Import snapshot<input id="snapshot" type="file" accept=".json" hidden></label></div>
+    </header>
+
+    <section id="dashboard" class="view active">
+      <div id="empty" class="empty card">
+        <div class="empty-icon">✈</div>
+        <h2>Connect your airline</h2>
+        <p>Import the diagnostic snapshot produced by the AM4 browser extension. After that, this dashboard uses the captured state instead of asking you to enter cash, aircraft or route data manually.</p>
+        <label class="button primary">Import AM4 snapshot<input id="snapshot2" type="file" accept=".json" hidden></label>
+      </div>
+      <div id="dashboard-content" class="hidden">
+        <div class="hero card">
+          <div><span class="eyebrow">NEXT BEST ACTION</span><h2 id="next-title">Analyzing your airline…</h2><p id="next-reason">The optimizer will only make recommendations when the captured evidence is sufficient.</p></div>
+          <div class="score"><span id="growth-score">—</span><small>growth score</small></div>
+        </div>
+        <div class="metrics" id="metrics"></div>
+        <div class="grid2">
+          <div class="card"><div class="card-head"><h3>Expansion queue</h3><span class="muted">priority order</span></div><div id="queue"></div></div>
+          <div class="card"><div class="card-head"><h3>Data health</h3><span id="health-label" class="pill">Checking</span></div><div id="health"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="aircraft" class="view"><div class="section-head"><div><span class="eyebrow">OPTIMIZER</span><h2>Aircraft</h2></div><p>Rank aircraft against the route and fleet economics available to the engine.</p></div><div id="aircraft-table" class="card table-wrap"></div></section>
+    <section id="routes" class="view"><div class="section-head"><div><span class="eyebrow">OPTIMIZER</span><h2>Routes</h2></div><p>Find high-value destinations using captured demand, distance and operating data.</p></div><div id="route-table" class="card table-wrap"></div></section>
+    <section id="circuits" class="view"><div class="section-head"><div><span class="eyebrow">SCHEDULING</span><h2>Circuits</h2></div><p>Prepare 24h/48h/72h scheduling candidates once route and aircraft state is available.</p></div><div id="circuit-content" class="card"></div></section>
+    <section id="prices" class="view"><div class="section-head"><div><span class="eyebrow">OPERATING COST</span><h2>Fuel & CO₂</h2></div><p>Track captured resource prices and keep purchase decisions separate from flight planning.</p></div><div id="price-content" class="card"></div></section>
+    <section id="data" class="view"><div class="section-head"><div><span class="eyebrow">SOURCE</span><h2>Airline Data</h2></div><p>Inspect what the extension has actually captured. No guessed values are shown as facts.</p></div><div id="data-content" class="card"></div></section>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
