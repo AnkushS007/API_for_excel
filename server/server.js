@@ -92,6 +92,6 @@ app.post("/api/logout", async (_req, res) => {
   res.json({ ok: true });
 });
 
-app.get("*", (_req, res) => res.sendFile(path.join(__dirname, "../webapp/index.html")));
+app.get(/.*/, (_req, res) => res.sendFile(path.join(__dirname, "../webapp/index.html")));
 const port = Number(process.env.PORT || 3000);
 app.listen(port, () => console.log("AM4 Command Center: http://localhost:" + port));
