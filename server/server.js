@@ -45,12 +45,12 @@ async function login(email, password) {
   await page.waitForTimeout(1500);
 
   // AM4 has historically exposed these login controls; selectors remain fallback-based.
-  const emailInput = page.locator("#lEmail").first();
-  const passwordInput = page.locator("#lPass").first();
+  const emailInput = page.locator("#Email, #lEmail, input[type=\"email\"]").first();
+  const passwordInput = page.locator("#Password, #lPass, input[type=\"password\"]").first();
   if (await emailInput.count() && await passwordInput.count()) {
     await emailInput.fill(email);
     await passwordInput.fill(password);
-    const loginButton = page.locator("#btnLogin").first();
+    const loginButton = page.locator("#btnLogin, button[type=\"submit\"], input[type=\"submit\"]").first();
     if (await loginButton.count()) await loginButton.click();
     else await passwordInput.press("Enter");
   } else {
