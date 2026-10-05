@@ -48,10 +48,10 @@ async function login(email, password) {
   const emailInput = page.locator("#Email, #lEmail, input[type=\"email\"]").first();
   const passwordInput = page.locator("#Password, #lPass, input[type=\"password\"]").first();
   if (await emailInput.count() && await passwordInput.count()) {
-    await emailInput.fill(email);
-    await passwordInput.fill(password);
+    await emailInput.evaluate((el, value) => { el.focus(); el.value = value; el.dispatchEvent(new Event("input", {bubbles:true})); el.dispatchEvent(new Event("change", {bubbles:true})); }, email);
+    await passwordInput.evaluate((el, value) => { el.focus(); el.value = value; el.dispatchEvent(new Event("input", {bubbles:true})); el.dispatchEvent(new Event("change", {bubbles:true})); }, password);
     const loginButton = page.locator("#btnLogin, button[type=\"submit\"], input[type=\"submit\"]").first();
-    if (await loginButton.count()) await loginButton.click();
+    if (await loginButton.count()) await loginButton.evaluate(el => el.click());
     else await passwordInput.press("Enter");
   } else {
     throw new Error("AM4 login form was not found. The game UI may have changed.");
