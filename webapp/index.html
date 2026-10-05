@@ -32,7 +32,12 @@
         <div class="empty-icon">✈</div>
         <h2>Connect your airline</h2>
         <p>Connect to your AM4 account through the local read-only connector. Your credentials are entered only on this computer and are not stored by the dashboard.</p>
-        <button id="connect2" class="button primary">Connect AM4</button>
+        <div class="login-form">
+  <input id="am4-email" type="text" autocomplete="username" placeholder="AM4 email / username">
+  <input id="am4-password" type="password" autocomplete="current-password" placeholder="AM4 password">
+  <button id="connect2" class="button primary">Connect AM4</button>
+  <small>Your credentials are sent only to this local application and are discarded after login.</small>
+</div>
       </div>
       <div id="dashboard-content" class="hidden">
         <div class="hero card">
