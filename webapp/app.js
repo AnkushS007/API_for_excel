@@ -26,11 +26,11 @@ async function connect(){
     const d=await r.json();
     if(!r.ok)throw new Error(d.error||'Login failed');
     state.source='live AM4 session'; state.records=d.state?.records||[]; state.visibleState=d.state?.text||''; state.snapshot=d.state; setConnected();
-  }catch(e){$('#sync').textContent='Connection failed';alert(e.message)}
+  }catch(e){$('#sync').textContent='Connection failed';alert('AM4 connection failed:\n\n'+e.message)}
 }
 async function refresh(){
   try{const r=await fetch('/api/state');const d=await r.json();if(!r.ok)throw new Error(d.error||'Not connected');state.source='live AM4 session';state.records=d.state?.records||[];state.visibleState=d.state?.text||'';setConnected()}
-  catch{$('#sync').textContent='Not connected'}
+  catch(e){$('#sync').textContent='Connection failed';alert('Refresh failed:\n\n'+e.message)}
 }
 async function logout(){await fetch('/api/logout',{method:'POST'}).catch(()=>{});state.records=[];state.visibleState='';state.source=null;setConnected()}
 document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.view).classList.add('active');$('#title').textContent=b.querySelector('span').textContent});
