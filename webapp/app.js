@@ -14,10 +14,9 @@ function renderTables(){const objs=flattenObjects(state.records);const aircraft=
 function table(rows,keys){const head=keys.map(k=>'<th>'+k+'</th>').join('');const body=rows.map(o=>'<tr>'+keys.map(k=>'<td>'+(o[k]!=null?String(o[k]):'—')+'</td>').join('')+'</tr>').join('');return'<table><thead><tr>'+head+'</tr></thead><tbody>'+body+'</tbody></table>'}
 function renderData(){const cats=state.records.reduce((a,r)=>(a[r.category]=(a[r.category]||0)+1,a),{});$('#data-content').innerHTML='<div class="health-row"><b>Records</b><span>'+state.records.length+'</span></div><div class="health-row"><b>Visible state</b><span>'+(state.visibleState?state.visibleState.length+' chars':'none')+'</span></div><div class="health-row"><b>Categories</b><span>'+Object.entries(cats).map(([k,v])=>k+': '+v).join(' · ')+'</span></div><div class="notice" style="margin-top:14px">Raw captured data stays local in this app. The dashboard uses the local authenticated AM4 session. No browser extension is required and credentials are not stored in the dashboard.</div>'}
 async function connect(){
-  const email=window.prompt("AM4 email / username (used only by the local connector):");
-  if(!email)return;
-  const password=window.prompt("AM4 password (not stored):");
-  if(!password)return;
+  const email=$('#am4-email')?.value.trim();
+  const password=$('#am4-password')?.value;
+  if(!email||!password){alert('Enter your AM4 email/username and password.');return;}
   $('#sync').textContent='Connecting…';
   try{
     const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
