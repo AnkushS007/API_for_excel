@@ -1,3 +1,6 @@
+import { normalizeSnapshot } from "../optimizer/normalizer.js";
+import { recommend } from "../optimizer/recommend.js";
+
 const state={snapshot:null,records:[],visibleState:null,source:null,normalized:null,recommendation:null};const $=s=>document.querySelector(s);
 const money=n=>n==null?'—':'$'+Number(n).toLocaleString('en-US',{maximumFractionDigits:0});
 const num=v=>{if(typeof v==='number')return Number.isFinite(v)?v:null;if(typeof v==='string'){const n=Number(v.replace(/[$, ]/g,''));return Number.isFinite(n)?n:null}return null};
