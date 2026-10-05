@@ -23,11 +23,11 @@ async function connect(){
     const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
     const d=await r.json();
     if(!r.ok)throw new Error(d.error||'Login failed');
-    state.source='live AM4 session'; state.records=[]; state.visibleState=d.state?.text||''; state.snapshot=d.state; setConnected();
+    state.source='live AM4 session'; state.records=d.state?.records||[]; state.visibleState=d.state?.text||''; state.snapshot=d.state; setConnected();
   }catch(e){$('#sync').textContent='Connection failed';alert(e.message)}
 }
 async function refresh(){
-  try{const r=await fetch('/api/state');const d=await r.json();if(!r.ok)throw new Error(d.error||'Not connected');state.source='live AM4 session';state.visibleState=d.state?.text||'';setConnected()}
+  try{const r=await fetch('/api/state');const d=await r.json();if(!r.ok)throw new Error(d.error||'Not connected');state.source='live AM4 session';state.records=d.state?.records||[];state.visibleState=d.state?.text||'';setConnected()}
   catch{$('#sync').textContent='Not connected'}
 }
 async function logout(){await fetch('/api/logout',{method:'POST'}).catch(()=>{});state.records=[];state.visibleState='';state.source=null;setConnected()}
