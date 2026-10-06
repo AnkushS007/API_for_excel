@@ -1,0 +1,9 @@
+{
+  "source": "AM4Tools",
+  "mode": "easy",
+  "hubs": ["DEL", "BOM", "BLR", "JFK"],
+  "fleet_source": "data/fleet/fleet.csv",
+  "route_source": "data/routes/am4tools_routes.csv",
+  "seat_config": "source_cfg",
+  "notes": "Hubs are the current primary hubs observed in the supplied fleet snapshot. JFK is retained from the optimizer configuration; verify in-game before running production recommendations."
+}
