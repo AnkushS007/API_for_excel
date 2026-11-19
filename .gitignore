@@ -1,0 +1,6 @@
+# Local credentials/configuration and live game data
+config/api.json
+data/api/
+.venv/
+__pycache__/
+*.py[cod]
