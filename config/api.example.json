@@ -1,0 +1,6 @@
+{
+  "company": "A7 Airlines",
+  "api_base_url": "https://www.airlinemanager.com/api",
+  "profile_sync_enabled": true,
+  "note": "Read-only profile sync. API key is stored separately in Windows Credential Manager, never here."
+}
